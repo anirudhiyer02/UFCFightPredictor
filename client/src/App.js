@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-
+import './App.css';
+import logo from './ufclogo.png';
 const App = () => {
   const [inputData, setInputData] = useState({
     userInput1: '',
     userInput2: '',
+    odds : 0,
     // Add more input fields as needed
   });
   const [backendResponse, setBackendResponse] = useState('');
@@ -37,21 +39,39 @@ const App = () => {
 
   return (
     <div>
+      <div className="image-container">
+      <img src={logo} alt="" />
+      </div>
+
+
+      <div className="space-between-divs"></div>
+
+      <div>Enter two fighters to see the odds of who wins!</div>
+
+      <div className="space-between-divs"></div>
       <input
         type="text"
         name="userInput1"
+        placeholder='Red Fighter'
         value={inputData.userInput1}
         onChange={handleInputChange}
       />
       <input
         type="text"
         name="userInput2"
+        placeholder='Blue Fighter'
         value={inputData.userInput2}
         onChange={handleInputChange}
       />
-      {/* Add more input fields as needed */}
+       <input
+        type="text"
+        name="odds"
+        placeholder='Red fighter odds (optional)'
+        value={inputData.odds}
+        onChange={handleInputChange}
+      />
       <button onClick={handleSubmit}>Submit</button>
-      <div>Backend Response: {backendResponse}</div>
+      <div>{backendResponse}</div>
     </div>
   );
 };

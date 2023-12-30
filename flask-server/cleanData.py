@@ -93,23 +93,18 @@ def members():
             row['B_win_by_KO/TKO'], row['B_win_by_Submission'], row['B_Height_cms'], row['B_Reach_cms'],
             row['B_age'], row['B_avg_SUB_ATT'], row['B_avg_TD_landed']]
     import numpy as np
-    Zhang_v_Namajunas =[[-180,0,0,-4,-2,1,3,15,0,2,2.54,5.08,-3,.3,.65]]
     data = request.json
     user_input1 = str(data.get('userInput1'))
     user_input2 = str(data.get('userInput2'))
-    count=0
-    for key, value in fighters.items():
-        print(f'{key}: {value}')
-        count += 1
-        if count == 5:
-            break
+    odds = float(data.get('odds'))
     arr2 = np.array(fighters[user_input2])
     arr1 = np.array(fighters[user_input1])
 
     data_array = np.subtract(arr2, arr1)
+    data_array[0] = odds
     # Add more variables as needed
-    print("Using the Random Forest model, we can predict that the Red_Fighter will win, with a win probability of",model_rf.predict_proba([data_array])[:,1])
-    response_data = {'result': 'Backend processed: {}, {}'.format(user_input1, user_input2)}
+    #print("Using the Random Forest model, we can predict that the Red_Fighter will win, with a win probability of",model_rf.predict_proba([data_array])[:,1])
+    response_data = {'result':"Using the model, we can predict that {} will win with a probability of {}".format(user_input1, model_rf.predict_proba([data_array])[:,1])}
 
     return jsonify(response_data)
 
